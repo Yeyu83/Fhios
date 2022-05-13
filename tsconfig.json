@@ -23,9 +23,10 @@
       "dom"
     ],
     "paths": {
-      "@hola/models": [
-        "app/models"
-      ],
+      "@hola/models/*": ["app/models/*"],
+      "@hola/domain/*": ["app/domain/*"],
+      "@hola/environments/*": ["environments/*"],
+      "@hola/core/*": ["app/core/*"]
     }
   },
   "angularCompilerOptions": {

@@ -1,4 +1,4 @@
-import { EstateDescription } from '@hola/models'
+import { EstateDescription } from '@hola/models/estate-description.interface'
 
 export interface EstateAttributes {
   field_inmu_nume_habi: number;

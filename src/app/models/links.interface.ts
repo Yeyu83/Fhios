@@ -1,4 +1,4 @@
-import { Link } from '@hola/models'
+import { Link } from '@hola/models/link.interface'
 
 export interface Links {
   self: Link;
