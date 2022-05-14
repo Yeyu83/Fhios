@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core'
 import { ApiResponse } from '@hola/models/api-response.interface'
 import { Estate } from '@hola/models/estate.interface'
 import {
-  BehaviorSubject, map, Observable, scan, switchMap,
+  BehaviorSubject, filter, map, Observable, scan, switchMap,
 } from 'rxjs'
 import { environment } from '@hola/environments/environment'
 
@@ -14,7 +14,7 @@ import { environment } from '@hola/environments/environment'
 export class EstatesService {
   private fetchTrigger = new BehaviorSubject<void>(undefined)
 
-  private estatesPageOffset = 0
+  private pageOffset = 0
 
   private readonly ESTATES_ENDPOINT = '/inmuebles'
 
@@ -25,7 +25,7 @@ export class EstatesService {
     'sort[weight][direction]': 'DESC',
     'sort[relevancy][path]': 'relevancy',
     'sort[relevancy][direction]': 'DESC',
-    'fields[node--inmuebles]': 'field_inmu_imag_arra,field_inmu_prec,field_inmu_nume_habi,field_inmu_refe,field_in,mu_area_cons,field_inmu_tipo_via,field_inmu_nomb_call,field_inmu_refe',
+    'fields[node--inmuebles]': 'field_inmu_imag_arra,field_inmu_prec,field_inmu_nume_habi,field_inmu_refe,field_inmu_area_cons,field_inmu_tipo_via,field_inmu_nomb_call',
   }
 
   constructor(
@@ -36,8 +36,8 @@ export class EstatesService {
     this.fetchTrigger.next()
   }
 
-  public fetchEstates(): Observable<Estate[]> {
-    this.estatesPageOffset += 1
+  fetchEstates(): Observable<Estate[]> {
+    this.pageOffset += 1
     return this.fetchTrigger.asObservable()
       .pipe(
         switchMap(() => this.getStates()),
@@ -46,8 +46,29 @@ export class EstatesService {
       )
   }
 
+  fetchStatesByRef(fieldInmuRefe: any): Observable<Estate | undefined> {
+    const params = new HttpParams({
+      fromObject: {
+        ...this.ESTATES_QUERY_PARAMS,
+        'filter[field_inmu_refe]': fieldInmuRefe,
+      },
+    })
+    return this.http
+      .get<ApiResponse>(`${environment.api.url}${this.ESTATES_ENDPOINT}`, { params })
+      .pipe(
+        filter((response: ApiResponse) => !!response.data.length),
+        map((response: ApiResponse) => response.data.shift()),
+      )
+  }
+
   private getStates(): Observable<ApiResponse> {
-    const params = new HttpParams({ fromObject: { ...this.ESTATES_QUERY_PARAMS, 'page[offset]': this.estatesPageOffset } })
-    return this.http.get<ApiResponse>(`${environment.api.url}${this.ESTATES_ENDPOINT}`, { params })
+    const params = new HttpParams({
+      fromObject: {
+        ...this.ESTATES_QUERY_PARAMS,
+        'page[offset]': this.pageOffset,
+      },
+    })
+    return this.http
+      .get<ApiResponse>(`${environment.api.url}${this.ESTATES_ENDPOINT}`, { params })
   }
 }

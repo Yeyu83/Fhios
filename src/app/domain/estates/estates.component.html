@@ -1,6 +1,8 @@
+
+<h1>Estates</h1>
 <ng-container *ngIf="estates$ | async as estates">
   <ng-container appTracker *ngFor="let estate of estates; trackBy: trackByFn">
-    <pre>{{ estate | json }}</pre>
+    <pre [routerLink]="['/estates', estate.attributes.field_inmu_refe]">{{ estate | json }}</pre>
   </ng-container>
   <button (click)="fetchNextEstates()">Load more</button>
 </ng-container>
