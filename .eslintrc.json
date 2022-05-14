@@ -39,7 +39,8 @@
         ],
         "import/prefer-default-export": "off",
         "semi": "off",
-        "@typescript-eslint/semi": ["error", "never"]
+        "@typescript-eslint/semi": ["error", "never"],
+        "class-methods-use-this": "off"
       }
     },
     {
