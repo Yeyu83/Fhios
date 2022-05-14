@@ -1,9 +1,9 @@
-import { Component } from '@angular/core'
+import { ChangeDetectionStrategy, Component } from '@angular/core'
 
 @Component({
-  selector: 'app-estate-detail',
   templateUrl: './estate.component.html',
   styleUrls: ['./estate.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EstateComponent {
 }
