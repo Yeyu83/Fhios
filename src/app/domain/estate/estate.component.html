@@ -1,7 +1,5 @@
 <h1>Estate</h1>
-<ng-container *ngIf="estate$ | async as estate; else noEstateMatched">
-  <pre>{{ estate | json }}</pre>
-</ng-container>
-<ng-template #noEstateMatched>
+<pre *ngIf="estate$ | async as estate">{{ estate | json }}</pre>
+<ng-container *ngIf="(estate$ | async) === null && (pollingService.isPolling | async) === false">
   <span style="color: red;">No se ha encontrado ninguna referencia.</span>
-</ng-template>
+</ng-container>
