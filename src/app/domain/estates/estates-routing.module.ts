@@ -8,7 +8,7 @@ const routes: Routes = [
     component: EstatesComponent,
   },
   {
-    path: ':id',
+    path: ':filter[field_inmu_refe]',
     loadChildren: () => import('@hola/domain/estate/estate.module').then((m) => m.EstateModule),
   },
 ]

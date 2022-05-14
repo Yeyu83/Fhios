@@ -1,2 +1,7 @@
-
 <h1>Estate</h1>
+<ng-container *ngIf="estate$ | async as estate; else noEstateMatched">
+  <pre>{{ estate | json }}</pre>
+</ng-container>
+<ng-template #noEstateMatched>
+  <span style="color: red;">No se ha encontrado ninguna referencia.</span>
+</ng-template>
