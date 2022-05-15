@@ -1,3 +1,4 @@
+import { ScrollService } from '@hola/services/scroll.service'
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
@@ -18,4 +19,10 @@ import { PollingInterceptor } from 'app/interceptors/polling.interceptor'
     },
   ],
 })
-export class CoreModule { }
+export class CoreModule {
+  constructor(
+    private scrollService: ScrollService,
+  ) {
+    this.scrollService.init()
+  }
+}
