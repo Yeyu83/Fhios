@@ -1,11 +1,18 @@
 <h1>Estates</h1>
-<pre *ngIf="estates$ | async as estates">
-  <ng-container appTracker *ngFor="let estate of estates; trackBy: trackByFn">
-    <pre [routerLink]="['/estates', estate.attributes.field_inmu_refe]">{{ estate | json }}</pre>
-  </ng-container>
+<div *ngIf="estates$ | async as estates">
+  <div class="estates">
+    <app-estate-card
+      *ngFor="let estate of estates; trackBy: trackByFn"
+      [routerLink]="['/estates', estate.attributes.field_inmu_refe]"
+      [estate]="estate"
+    ></app-estate-card>
+  </div>
   <button (click)="fetchNextEstates()">Load more</button>
-</pre>
-<ng-container *ngIf="(estates$ | async) === null && (pollingService.isPolling| async) === false">
-  <span style="color: red;">No se han encontrado referencias.</span>
+</div>
+<ng-container
+  *ngIf="
+    (estates$ | async) === null && (pollingService.isPolling | async) === false
+  "
+>
+  <span style="color: red">No se han encontrado referencias.</span>
 </ng-container>
-

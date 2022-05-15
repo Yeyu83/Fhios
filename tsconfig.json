@@ -28,7 +28,8 @@
       "@hola/environments/*": ["environments/*"],
       "@hola/core/*": ["app/core/*"],
       "@hola/services/*": ["app/services/*"],
-      "@hola/providers/*": ["app/providers/*"]
+      "@hola/providers/*": ["app/providers/*"],
+      "@hola/components/*": ["app/components/*"]
     }
   },
   "angularCompilerOptions": {
