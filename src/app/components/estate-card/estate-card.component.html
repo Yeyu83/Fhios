@@ -1,0 +1,11 @@
+<ng-container *ngIf="estate?.attributes as attrs">
+  <img
+    [src]="attrs.field_inmu_imag_arra[0]"
+    loading="lazy"
+    [alt]="attrs.field_inmu_nomb_call"
+    width="250"
+    height="200"
+  />
+  <span>{{ attrs.field_inmu_tipo_via }}</span>
+  <span>{{ attrs.field_inmu_prec }}</span>
+</ng-container>
