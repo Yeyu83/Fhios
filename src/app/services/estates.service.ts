@@ -12,6 +12,8 @@ import { environment } from '@hola/environments/environment'
   providedIn: 'root',
 })
 export class EstatesService {
+  public estates$!: Observable<Estate[]>
+
   private estatesFetcher = new BehaviorSubject<void>(undefined)
 
   private pageOffset = 0

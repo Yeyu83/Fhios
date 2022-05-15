@@ -1,5 +1,5 @@
 <h1>Estates</h1>
-<div *ngIf="estates$ | async as estates">
+<div *ngIf="estatesService.estates$ | async as estates">
   <div class="estates">
     <app-estate-card
       *ngFor="let estate of estates; trackBy: trackByFn"
@@ -11,7 +11,7 @@
 </div>
 <ng-container
   *ngIf="
-    (estates$ | async) === null && (pollingService.isPolling | async) === false
+    (estatesService.estates$ | async) === null && (pollingService.isPolling | async) === false
   "
 >
   <span style="color: red">No se han encontrado referencias.</span>

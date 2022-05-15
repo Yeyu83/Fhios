@@ -1,8 +1,6 @@
 import { PollingService } from '@hola/services/polling.service'
-import { Observable, shareReplay } from 'rxjs'
-import {
-  ChangeDetectionStrategy, Component, OnDestroy, OnInit,
-} from '@angular/core'
+import { shareReplay } from 'rxjs'
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
 import { Estate } from '@hola/models/estate.interface'
 import { EstatesService } from '@hola/services/estates.service'
 
@@ -11,16 +9,17 @@ import { EstatesService } from '@hola/services/estates.service'
   styleUrls: ['./estates.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class EstatesComponent implements OnInit, OnDestroy {
-  estates$!: Observable<Estate[]>
-
+export class EstatesComponent implements OnInit {
   constructor(
-    private readonly estatesService: EstatesService,
+    public readonly estatesService: EstatesService,
     public readonly pollingService: PollingService,
   ) { }
 
   ngOnInit(): void {
-    this.estates$ = this.estatesService.fetchEstates().pipe(shareReplay())
+    if (!this.estatesService.estates$) {
+      this.estatesService.estates$ = this.estatesService.fetchEstates()
+        .pipe(shareReplay())
+    }
   }
 
   fetchNextEstates(): void {
@@ -29,9 +28,5 @@ export class EstatesComponent implements OnInit, OnDestroy {
 
   trackByFn(_: number, estate: Estate): string {
     return estate.id
-  }
-
-  ngOnDestroy(): void {
-    this.estatesService.restartPageOffsetCount()
   }
 }
