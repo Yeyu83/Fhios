@@ -4,6 +4,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
 import { ActivatedRoute, Params } from '@angular/router'
 import { Estate } from '@hola/models/estate.interface'
 import { PollingService } from '@hola/services/polling.service'
+import { Location } from '@angular/common'
 
 @Component({
   templateUrl: './estate.component.html',
@@ -17,6 +18,7 @@ export class EstateComponent implements OnInit {
     private readonly route: ActivatedRoute,
     private readonly estatesService: EstatesService,
     public readonly pollingService: PollingService,
+    public readonly location: Location,
   ) { }
 
   ngOnInit(): void {

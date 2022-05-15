@@ -1,5 +1,12 @@
-<h1>Estate</h1>
-<pre *ngIf="estate$ | async as estate">{{ estate | json }}</pre>
-<ng-container *ngIf="(estate$ | async) === null && (pollingService.isPolling | async) === false">
-  <span style="color: red;">No se ha encontrado ninguna referencia.</span>
-</ng-container>
+<div class="estate">
+  <div class="estate__title">
+    <h1>Estate</h1>
+    <button (click)="location.back()">Go back</button>
+  </div>
+  <div class="estate__content">
+    <pre *ngIf="estate$ | async as estate">{{ estate | json }}</pre>
+    <ng-container *ngIf="(estate$ | async) === null && (pollingService.isPolling | async) === false">
+      <span style="color: red;">No se ha encontrado ninguna referencia.</span>
+    </ng-container>
+  </div>
+</div>
