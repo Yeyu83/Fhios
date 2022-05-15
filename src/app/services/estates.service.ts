@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core'
 import { ApiResponse } from '@hola/models/api-response.interface'
 import { Estate } from '@hola/models/estate.interface'
 import {
-  BehaviorSubject, filter, finalize, map, Observable, scan, switchMap,
+  BehaviorSubject, filter, map, Observable, scan, switchMap, tap,
 } from 'rxjs'
 import { environment } from '@hola/environments/environment'
 
@@ -42,7 +42,7 @@ export class EstatesService {
         switchMap(() => this.getEstates()),
         map((response: ApiResponse) => response.data),
         scan((acc: Estate[], val: Estate[]) => [...acc, ...val]),
-        finalize(() => {
+        tap(() => {
           this.pageOffset += 1
         }),
       )
@@ -56,7 +56,7 @@ export class EstatesService {
       )
   }
 
-  restartPageoffsetCount(): void {
+  restartPageOffsetCount(): void {
     this.pageOffset = 0
   }
 

@@ -32,6 +32,6 @@ export class EstatesComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.estatesService.restartPageoffsetCount()
+    this.estatesService.restartPageOffsetCount()
   }
 }
