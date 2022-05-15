@@ -40,7 +40,9 @@
         "import/prefer-default-export": "off",
         "semi": "off",
         "@typescript-eslint/semi": ["error", "never"],
-        "class-methods-use-this": "off"
+        "class-methods-use-this": "off",
+        "no-console": "off",
+        "arrow-parens": "off"
       }
     },
     {
