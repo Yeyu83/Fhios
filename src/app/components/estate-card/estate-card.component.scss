@@ -1,5 +1,5 @@
-:host {
-  display: flex;
+.estate-card {
+  display: inline-block;
   flex-direction: column;
   margin: 0.67rem;
   padding: 1.34rem;
@@ -8,10 +8,12 @@
   text-align: center;
   background-color: #fff;
   outline: 1px solid #ddd;
+  width: 300px;
 
   &:hover {
-    outline: 1px solid #bbb;
+    outline: 1px solid blue;
     color: blue;
+    background: linear-gradient(0deg, rgba(14,0,255,.2) 0%, rgba(2,2,255,.2) 5%, rgba(255,255,255,.2) 100%);
     transition-duration: .25s;
   }
 }

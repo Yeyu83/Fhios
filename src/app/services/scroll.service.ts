@@ -6,7 +6,7 @@ import {
   map, Observable, observeOn, scan, skip, withLatestFrom,
 } from 'rxjs'
 
-export interface HistoryItem {
+interface HistoryItem {
   url: string;
   scrollY: number;
 }
@@ -73,11 +73,11 @@ export class ScrollService {
 
   private setHistoryItem(all: HistoryItem[], curr: HistoryItem): HistoryItem[] {
     const newHistory = all
-    const index = all.findIndex(historyItem => historyItem.url === curr.url)
-    if (index === -1) {
+    const currIndex = all.findIndex(historyItem => historyItem.url === curr.url)
+    if (currIndex === -1) {
       newHistory.push(curr)
     } else {
-      newHistory[index].scrollY = curr.scrollY
+      newHistory[currIndex].scrollY = curr.scrollY
     }
     return newHistory
   }

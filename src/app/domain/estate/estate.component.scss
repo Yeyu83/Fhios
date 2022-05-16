@@ -1,10 +1,22 @@
 .estate {
-  .estate__title {
+  margin: 1.67rem;
+  padding: 1.67rem;
+  &__title {
     display: flex;
     justify-content: space-between;
     align-items: center;
     h1 {
       display: inline-block;
+    }
+  }
+  &__content {
+    display: flex;
+    &--image {
+      width: 50%;
+    }
+    &--data {
+      width: 50%;
+      text-align: right;
     }
   }
 }

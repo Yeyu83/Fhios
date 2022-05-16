@@ -1,12 +1,11 @@
-import { EstateParams } from '@hola/models/estates-params.interface'
 import { HttpClient, HttpParams } from '@angular/common/http'
 import { Injectable } from '@angular/core'
-import { ApiResponse } from '@hola/models/api-response.interface'
-import { Estate } from '@hola/models/estate.interface'
 import {
-  BehaviorSubject, filter, map, Observable, scan, switchMap, tap,
+  BehaviorSubject, map, Observable, scan, switchMap, tap,
 } from 'rxjs'
 import { environment } from '@hola/environments/environment'
+import { ApiResponse, Estate } from '@hola/models/estate.interface'
+import { EstateParams } from '@hola/models/estates-params.interface'
 
 @Injectable({
   providedIn: 'root',
@@ -39,9 +38,16 @@ export class EstatesService {
   }
 
   fetchEstates(): Observable<Estate[]> {
+    const params = new HttpParams({
+      fromObject: {
+        ...this.ESTATES_QUERY_PARAMS,
+        'page[offset]': this.pageOffset,
+      },
+    })
     return this.estatesFetcher.asObservable()
       .pipe(
-        switchMap(() => this.getEstates()),
+        switchMap(() => this.http
+          .get<ApiResponse>(`${environment.api.url}${this.ESTATES_ENDPOINT}`, { params })),
         map((response: ApiResponse) => response.data),
         scan((acc: Estate[], val: Estate[]) => [...acc, ...val]),
         tap(() => {
@@ -50,37 +56,14 @@ export class EstatesService {
       )
   }
 
-  fetchState(fieldInmuRefe: string): Observable<Estate> {
-    return this.getEstate(fieldInmuRefe)
+  fetchEstate(id: string): Observable<any> {
+    return this.http.get<ApiResponse>(`${environment.api.url}${this.ESTATES_ENDPOINT}/${id}`)
       .pipe(
-        filter((response) => !!response.data.length),
-        map((response: ApiResponse) => response.data[0]),
+        map((response: ApiResponse) => response.data),
       )
   }
 
   restartPageOffsetCount(): void {
     this.pageOffset = 0
-  }
-
-  private getEstate(fieldInmuRefe: string) {
-    const params = new HttpParams({
-      fromObject: {
-        ...this.ESTATES_QUERY_PARAMS,
-        'filter[field_inmu_refe]': fieldInmuRefe,
-      },
-    })
-    return this.http
-      .get<ApiResponse>(`${environment.api.url}${this.ESTATES_ENDPOINT}`, { params })
-  }
-
-  private getEstates(): Observable<ApiResponse> {
-    const params = new HttpParams({
-      fromObject: {
-        ...this.ESTATES_QUERY_PARAMS,
-        'page[offset]': this.pageOffset,
-      },
-    })
-    return this.http
-      .get<ApiResponse>(`${environment.api.url}${this.ESTATES_ENDPOINT}`, { params })
   }
 }
