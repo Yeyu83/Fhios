@@ -4,9 +4,21 @@
     <button (click)="location.back()">Go back</button>
   </div>
   <div class="estate__content">
-    <pre *ngIf="estate$ | async as estate">{{ estate | json }}</pre>
-    <ng-container *ngIf="(estate$ | async) === null && (pollingService.isPolling | async) === false">
-      <span style="color: red;">No se ha encontrado ninguna referencia.</span>
+    <ng-container *ngIf="estate$ | async as estate">
+      <img class="estate__content--image" [src]="estate.attributes.field_inmu_imag_arra[0]" alt="" />
+      <div class="estate__content--data">
+        <h2>{{ estate.attributes.field_inmu_prec | currency: 'EUR' : 'symbol' : '3.2-2' : 'ES' }}</h2>
+        <h3>{{ estate.attributes.field_inmu_titl }}</h3>
+        <p>{{ estate.attributes.field_inmu_desc.value }}</p>
+      </div>
+    </ng-container>
+    <ng-container
+      *ngIf="
+        (estate$ | async) === null &&
+        (pollingService.isPolling | async) === false
+      "
+    >
+      <span style="color: red">No se ha encontrado ninguna referencia.</span>
     </ng-container>
   </div>
 </div>

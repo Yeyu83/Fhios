@@ -2,7 +2,6 @@ import { EstatesService } from '@hola/services/estates.service'
 import { Observable, shareReplay, switchMap } from 'rxjs'
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
 import { ActivatedRoute, Params } from '@angular/router'
-import { Estate } from '@hola/models/estate.interface'
 import { PollingService } from '@hola/services/polling.service'
 import { Location } from '@angular/common'
 
@@ -12,7 +11,7 @@ import { Location } from '@angular/common'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EstateComponent implements OnInit {
-  estate$!: Observable<Estate>
+  estate$!: Observable<any>
 
   constructor(
     private readonly route: ActivatedRoute,
@@ -24,7 +23,7 @@ export class EstateComponent implements OnInit {
   ngOnInit(): void {
     this.estate$ = this.route.params
       .pipe(
-        switchMap((params: Params) => this.estatesService.fetchState(params['filter[field_inmu_refe]'])),
+        switchMap((params: Params) => this.estatesService.fetchEstate(params['id'])),
         shareReplay(),
       )
   }

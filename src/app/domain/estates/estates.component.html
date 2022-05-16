@@ -1,18 +1,26 @@
-<h1>Estates</h1>
-<div *ngIf="estatesService.estates$ | async as estates">
-  <div class="estates">
-    <app-estate-card
-      *ngFor="let estate of estates; trackBy: trackByFn"
-      [routerLink]="['/estates', estate.attributes.field_inmu_refe]"
-      [estate]="estate"
-    ></app-estate-card>
+<div class="estates">
+  <div class="estates__title">
+    <h1>Estates</h1>
   </div>
+  <div
+    *ngIf="estatesService.estates$ | async as estates"
+    class="estates__content"
+  >
+    <div class="estates__content--grid">
+      <app-estate-card
+        *ngFor="let estate of estates; trackBy: trackByFn"
+        [routerLink]="['/estates', estate.id]"
+        [estate]="estate"
+      ></app-estate-card>
+    </div>
+  </div>
+  <span
+    *ngIf="
+      (estatesService.estates$ | async) === null &&
+      (pollingService.isPolling | async) === false
+    "
+    style="color: red"
+    >No se han encontrado referencias.</span
+  >
   <button (click)="fetchNextEstates()">Load more</button>
 </div>
-<ng-container
-  *ngIf="
-    (estatesService.estates$ | async) === null && (pollingService.isPolling | async) === false
-  "
->
-  <span style="color: red">No se han encontrado referencias.</span>
-</ng-container>

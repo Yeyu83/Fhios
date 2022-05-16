@@ -1,5 +1,11 @@
 .estates {
-  justify-content: center;
-  display: flex;
-  flex-wrap: wrap;
+  &__content {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    &--grid {
+      width: 80%;
+      flex-wrap: wrap;
+    }
+  }
 }

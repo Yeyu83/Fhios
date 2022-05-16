@@ -1,4 +1,4 @@
-<ng-container *ngIf="estate?.attributes as attrs">
+<div class="estate-card" *ngIf="estate?.attributes as attrs">
   <img
     [src]="attrs.field_inmu_imag_arra[0]"
     loading="lazy"
@@ -6,6 +6,6 @@
     width="250"
     height="200"
   />
-  <span>{{ attrs.field_inmu_tipo_via }}</span>
-  <span>{{ attrs.field_inmu_prec }}</span>
-</ng-container>
+  <h3>{{ attrs.field_inmu_tipo_via }}</h3>
+  <span>{{ attrs.field_inmu_prec | currency: 'EUR' : 'symbol' : '3.2-2' : 'ES'  }}</span>
+</div>
